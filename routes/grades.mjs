@@ -1,5 +1,4 @@
 import express from "express";
-import mongoose from "mongoose";
 import { ObjectId } from "mongodb";
 import Grade from "../models/Grade.mjs"; // Import the Grade model
 
