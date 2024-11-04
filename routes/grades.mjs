@@ -2,7 +2,6 @@ import express from "express";
 import { ObjectId } from "mongodb";
 import Grade from "../models/Grade.mjs"; // Import the Grade model
 
-
 const router = express.Router();
 
 // Function to validate ObjectId
