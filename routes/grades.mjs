@@ -249,26 +249,6 @@ router.get("/stats/:id", async (req, res) => {
   }
 });
 
-// Get a single grade entry
-router.get("/:id", async (req, res) => {
-  console.log("Received ID:", req.params.id);
-
-  // Validate ObjectId
-  if (!isValidObjectId(req.params.id)) {
-    return res.status(400).send("Invalid ID format");
-  }
-
-  let query = { _id: new ObjectId(req.params.id) };
-  console.log("Query:", query);
-  let result = await Grade.findById(query);
-
-  if (!result) {
-    return res.status(404).send("Not found");
-  } else {
-    return res.status(200).send(result);
-  }
-});
-
 // Add a score to a grade entry
 router.patch("/:id/add", async (req, res) => {
   // Validate ObjectId
@@ -298,20 +278,6 @@ router.patch("/:id/remove", async (req, res) => {
   });
 
   if (result.modifiedCount === 0) res.status(404).send("Not found");
-  else res.status(200).send(result);
-});
-
-// Delete a single grade entry
-router.delete("/:id", async (req, res) => {
-  // Validate ObjectId
-  if (!isValidObjectId(req.params.id)) {
-    return res.status(400).send("Invalid ID format");
-  }
-
-  let query = { _id: new ObjectId(req.params.id) };
-  let result = await Grade.deleteOne(query);
-
-  if (result.deletedCount === 0) res.status(404).send("Not found");
   else res.status(200).send(result);
 });
 
@@ -366,6 +332,26 @@ router.patch("/class/:id", async (req, res) => {
 
   if (result.modifiedCount === 0) res.status(404).send("Not found");
   else res.status(200).send(result);
+});
+
+// Get a single grade entry
+router.get("/:id", async (req, res) => {
+  console.log("Received ID:", req.params.id);
+
+  // Validate ObjectId
+  if (!isValidObjectId(req.params.id)) {
+    return res.status(400).send("Invalid ID format");
+  }
+
+  let query = { _id: new ObjectId(req.params.id) };
+  console.log("Query:", query);
+  let result = await Grade.findById(query);
+
+  if (!result) {
+    return res.status(404).send("Not found");
+  } else {
+    return res.status(200).send(result);
+  }
 });
 
 // Delete a class
@@ -434,6 +420,21 @@ router.get("/class/:id/average", async (req, res) => {
   let classAverage = totalWeightedScore / totalStudents; // Calculate class average
 
   res.status(200).send({ classAverage });
+});
+
+
+// Delete a single grade entry
+router.delete("/:id", async (req, res) => {
+  // Validate ObjectId
+  if (!isValidObjectId(req.params.id)) {
+    return res.status(400).send("Invalid ID format");
+  }
+
+  let query = { _id: new ObjectId(req.params.id) };
+  let result = await Grade.deleteOne(query);
+
+  if (result.deletedCount === 0) res.status(404).send("Not found");
+  else res.status(200).send(result);
 });
 
 export default router;
