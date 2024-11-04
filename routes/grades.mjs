@@ -380,9 +380,13 @@ router.delete("/class/:id", async (req, res) => {
 
 // Get the weighted average grade for a class
 router.get("/class/:id/average", async (req, res) => {
-  let query = { class_id: Number(req.params.id) };
+  let classId = Number(req.params.id); // Log the class ID being queried
+  console.log("Querying average for class ID:", classId);
+  
+  let query = { class_id: classId };
 
   let results = await Grade.find(query);
+  console.log("Results found:", results); // Log the results
 
   if (!results || results.length === 0) {
     return res.status(404).send("Not found");
