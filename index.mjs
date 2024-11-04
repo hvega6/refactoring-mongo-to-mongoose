@@ -1,16 +1,18 @@
 import express from "express";
 import dotenv from 'dotenv';
 import grades from "./routes/grades.mjs";
+import mongoose from "mongoose";
 
 dotenv.config();
 
 const PORT = 5050;
 const app = express();
 
+await mongoose.connect(process.env.ATLAS_URI);
+
 app.use(express.json());
 
 // The connection to MongoDB is already established in db/conn.mjs
-
 app.get("/", async (req, res) => {
   res.send("Welcome to the API.");
 });
